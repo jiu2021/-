@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+
+<head>
+
+</head>
+
+<body>
+  <input id="input" type="text">
+  <div>
+    a
+  </div>
+  <div style="margin-top: 16px">
+    b
+    <div style="margin-top: 8px">
+      c
+    </div>
+  </div>
+</body>
+
+<script>
+  const dom = document.getElementById('input')
+  dom.addEventListener('input', throttle(handleInput, 1000, false))
+
+  function handleInput() {
+    console.log(111);
+  }
+
+  function debounce(fn, delay = 1000, imd = false) {
+    let timer = null;
+    let imdC = true
+
+    function _debounce(...args) {
+      if (timer) {
+        clearTimeout(timer);
+      }
+
+      // 当是第一次触发，且需要立即触发
+      if (imdC && imd) {
+        fn.apply(this, args);
+
+        imdC = false;
+      }
+
+      timer = setTimeout(() => {
+        fn.apply(this, args);
+        imdC = true;
+      }, delay);
+    }
+
+    return _debounce;
+  }
+
+  function throttle(fn, interval = 1000, imd = false) {
+    let last_time = 0;
+    let imdC = true;
+
+    function _throttle(...args) {
+
+      if (imdC && imd) {
+        fn.apply(this, args);
+        imdC = false;
+      }
+
+      const now_time = new Date().getTime();
+      const remain = now_time - last_time;
+      if (remain > interval) {
+        fn.apply(this, args);
+
+        last_time = now_time;
+        imdC = false;
+      }
+    }
+
+    return _throttle;
+  }
+</script>
