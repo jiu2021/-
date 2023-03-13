@@ -48,4 +48,3 @@ const use_curry = new_curry(sum);
 
 let res = use_curry(1, 2)(3);
 console.log(res)
-

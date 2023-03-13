@@ -4,6 +4,15 @@
 
 1. Vue2.x 通过给每个对象添加`getter setter`属性去改变对象,实现对数据的观测,Vue3.x 通过 Proxy 代理目标对象,且一开始只代理最外层对象,嵌套对象`lazy by default` ,性能会更好
 2. 支持数组索引修改,对象属性的增加,删除
+- `Proxy` 作为新标准将受到浏览器厂商重点持续的性能优化
+
+- `Proxy` 能观察的类型比 `defineProperty` 更丰富
+
+- `Proxy` 不兼容IE，也没有 `polyfill`, `defineProperty` 能支持到IE9
+
+- `Object.definedProperty` 是劫持对象的属性，新增元素需要再次 `definedProperty`。而 `Proxy` 劫持的是整个对象，不需要做特殊处理
+
+- 使用 `defineProperty` 时，我们修改原来的 `obj` 对象就可以触发拦截，而使用 `proxy`，就必须修改代理对象，即 `Proxy` 的实例才可以触发拦截
 
 ### react 与 vue 数组中 key 的作用是什么
 
@@ -26,20 +35,20 @@ Vue.nextTick() 方法是用来在 DOM 更新完成后执行回调函数的。其
 ### vue3相对于vue2改变
 
 - 监测机制的改变（Object.defifineProperty —> Proxy）
-
+  
   改善了
-
+  
   - 检测不到对象属性的添加和删除
   - 数组`API`方法无法监听到
   - 需要对每个属性进行遍历监听，如果嵌套对象，需要深层监听，造成性能问题
 
 - treeshaking打包面积变小
-
+  
   - 编译阶段利用`ES6 Module`判断哪些模块已经加载
   - 判断那些模块和变量未被使用或者引用，进而删除对应代码
 
 - composition api
-
+  
   - 在逻辑组织和逻辑复用方面，`Composition API`是优于`Options API`
   - 因为`Composition API`几乎是函数，会有更好的类型推断。
   - `Composition API`对 `tree-shaking` 友好，代码也更容易压缩
@@ -70,4 +79,3 @@ diff算法的本质是找出两个对象之间的差异，目的是尽可能复�
 
 - 根实例对象`data`可以是对象也可以是函数（根实例是单例），不会产生数据污染情况
 - 组件实例对象`data`必须为函数，目的是为了防止多个组件实例对象之间共用一个`data`，产生数据污染。采用函数的形式，`initData`时会将其作为工厂函数都会返回全新`data`对象
-
