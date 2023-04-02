@@ -2,6 +2,8 @@
 
 ### 简述事件循环
 
+<img title="" src="https://segmentfault.com/img/remote/1460000012925884" alt="" width="427" data-align="center">
+
 - 必须单线程，但要非阻塞，通过异步
 
 - 事件队列：异步代码的执行，遇到异步事件不会等待它返回结果，而是将这个事件挂起，继续执行执行栈中的其他任务。当异步事件返回结果，将它放到事件队列中，被放入事件队列不会立刻执行起回调，而是等待当前执行栈中所有任务都执行完毕，主线程空闲状态，主线程会去查找事件队列中是否有任务，如果有，则取出排在第一位的事件，并把这个事件对应的回调放到执行栈中，然后执行其中的同步代码。
@@ -11,6 +13,8 @@
 - 先说基本知识点，宏任务、微任务有哪些
 
 - 说事件循环机制过程，边说边画图出来
+  
+  <img title="" src="https://segmentfault.com/img/remote/1460000012925885" alt="" data-align="center" width="197">
 
 - 说async/await执行顺序注意，可以把 chrome 的优化，做法其实是违法了规范的，V8 团队的PR这些自信点说出来，显得你很好学，理解得很详细，很透彻。
 
@@ -212,7 +216,7 @@ Promise.any([
   new B() // B
   ```
 
--  ES6模块
+- ES6模块
   
   CommonJS 模块输出的是一个值的拷贝，ES6 模块输出的是值的引用。
   
@@ -223,3 +227,52 @@ Promise.any([
 当谈到继承时，JavaScript 只有一种结构：对象。每个实例对象（object）都有一个私有属性（称之为 __proto__）指向它的构造函数的原型对象（**prototype**）。该原型对象也有一个自己的原型对象（__proto__），层层向上直到一个对象的原型对象为 `null`。根据定义，`null` 没有原型，并作为这个**原型链**中的最后一个环节
 
 <img title="" src="https://img-blog.csdnimg.cn/20200724104747689.png" alt="" width="348" data-align="center">
+
+## 变量提升、函数提升
+
+- 函数提升只针对具名函数，而对于赋值的匿名函数，并不会存在函数提升。
+
+- 函数提升优先级高于变量提升，且不会被同名变量声明覆盖，但是会被变量赋值后覆盖。而且存在同名函数与同名变量时，优先执行函数。
+
+## for in 和 for of
+
+简单来说就是它们两者都可以用于遍历，不过`for in`遍历的是数组的索引（`index`），而`for of`遍历的是数组元素值（`value`）
+
+- for in
+  
+  使用`for in`会遍历数组所有的可枚举属性，包括原型
+
+- for of
+  
+  `for of`遍历的是数组元素值，而且`for of`遍历的只是数组内的元素，不包括原型属性和索引
+  
+  `for of`适用遍历数/数组对象/字符串/`map`/`set`等拥有迭代器对象（`iterator`）的集合，但是**不能遍历对象**，因为没有迭代器对象，但如果想遍历对象的属性，你可以用`for in`循环（这也是它的本职工作）或用内建的`Object.keys()`方法
+
+## 迭代器和生成器
+
+### 迭代器
+
+在 JavaScript 中，**迭代器**是一个对象，它定义一个序列，并在终止时可能返回一个返回值。更具体地说，迭代器是通过使用 `next()` 方法实现 [Iterator protocol](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Iteration_protocols#the_iterator_protocol) 的任何一个对象，该方法返回具有两个属性的对象： `value`，这是序列中的 next 值；和 `done` ，如果已经迭代到序列中的最后一个值，则它为 `true` 。如果 `value` 和 `done` 一起存在，则它是迭代器的返回值。
+
+### 生成器
+
+虽然自定义的迭代器是一个有用的工具，但由于需要显式地维护其内部状态，因此需要谨慎地创建。生成器函数提供了一个强大的选择：它允许你定义一个包含自有迭代算法的函数，同时它可以自动维护自己的状态。生成器函数使用 [`function*`](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/function*)语法编写。最初调用时，生成器函数不执行任何代码，而是返回一种称为 Generator 的迭代器。通过调用生成器的下一个方法消耗值时，Generator 函数将执行，直到遇到 yield 关键字。
+
+```js
+function* walkPreOrder(node) {
+  if (!node) return
+
+  // 做些什么
+  yield node
+  if (node.children) {
+    for (let child of node.children) {
+      yield* walkPreOrder(child)
+    }
+  }
+}
+
+// 用法
+for(let node of walkPreOrder(root)){
+  console.log(node)
+}
+```

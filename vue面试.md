@@ -3,6 +3,7 @@
 ### vue3.0 中为什么要使用 Proxy，有什么改进
 
 1. Vue2.x 通过给每个对象添加`getter setter`属性去改变对象,实现对数据的观测,Vue3.x 通过 Proxy 代理目标对象,且一开始只代理最外层对象,嵌套对象`lazy by default` ,性能会更好
+
 2. 支持数组索引修改,对象属性的增加,删除
 - `Proxy` 作为新标准将受到浏览器厂商重点持续的性能优化
 
@@ -79,3 +80,45 @@ diff算法的本质是找出两个对象之间的差异，目的是尽可能复�
 
 - 根实例对象`data`可以是对象也可以是函数（根实例是单例），不会产生数据污染情况
 - 组件实例对象`data`必须为函数，目的是为了防止多个组件实例对象之间共用一个`data`，产生数据污染。采用函数的形式，`initData`时会将其作为工厂函数都会返回全新`data`对象
+
+### 生命周期
+
+![](/Users/jiu/Library/Application%20Support/marktext/images/2023-03-27-15-22-37-image.png)
+
+### 比较react
+
+**Vue 使用的是 web 开发者更熟悉的模板与特性**，Vue的API跟传统web开发者熟悉的模板契合度更高，比如Vue的[单文件组件](https://www.zhihu.com/search?q=%E5%8D%95%E6%96%87%E4%BB%B6%E7%BB%84%E4%BB%B6&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22%3A%22answer%22%2C%22sourceId%22%3A1066629375%7D)是以模板+JavaScript+CSS的组合模式呈现，它跟web现有的HTML、JavaScript、CSS能够更好地配合。**React 的特色在于[函数式编程](https://www.zhihu.com/search?q=%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22%3A%22answer%22%2C%22sourceId%22%3A1066629375%7D)的理念和丰富的技术选型**。Vue 比起 React 更容易被前端工程师接受，这是一个直观的感受；React 则更容易吸引在 FP 上持续走下去的开发者。
+
+从**使用习惯和思维模式**上考虑，对于一个没有任何Vue和React基础的web开发者来说， Vue会更友好，更符合他的思维模式。React对于拥有函数式编程背景的开发者以及一些并不是以web为主要开发平台的开发人员而言，React更容易接受。这并不意味着他们不能接受Vue，Vue和React之间的差异对他们来说就没有web开发者那么明显。可以说，**Vue更加注重web开发者的习惯**。
+
+实现上，Vue跟React的最大区别在于数据的reactivity，就是反应式系统上。**Vue提供反应式的数据，当数据改动时，界面就会自动更新，而React里面需要调用方法SetState。我把两者分别称为**[Push-based](https://www.zhihu.com/search?q=Push-based&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22%3A%22answer%22%2C%22sourceId%22%3A1066629375%7D)**和**Pull-based。所谓Push-based就是说，改动数据之后，数据本身会把这个改动推送出去，告知渲染系统自动进行渲染。在React里面，它是一个Pull的形式，用户要给系统一个明确的信号说明现在需要重新渲染了，这个系统才会重新渲染。两者并没有绝对的优劣之分，更多的也是思维模式和开发习惯的不同。
+
+两者不是完全互斥的，比如说在React里面，你也可以用一些第三方的库像MobX实现Push-based的系统，同时你也可以在Vue2.0里面，通过一些手段，比如把数据freeze起来，让数据不再具有反应式特点，或者通过手动调用组件更新的方法来做一个pull-based系统。所以两者并没有一个绝对的界限，只是默认的倾向性不同而已。
+
+- 都是数据驱动
+
+- 都有组件化
+
+- 都用虚拟dom
+
+- 响应式原理不同
+
+- 模板不同
+
+- 渲染过程不同
+
+### 软连接硬连接
+
+软链接：
+
+- 1.软链接是存放另一个文件的路径的形式存在。
+- 2.软链接可以 跨文件系统 ，硬链接不可以。
+- 3.软链接可以对一个不存在的文件名进行链接，硬链接必须要有源文件。
+- 4.软链接可以对目录进行链接。
+
+硬链接：
+
+- 1. 硬链接，以文件副本的形式存在。但不占用实际空间。
+- 2. 不允许给目录创建硬链接。
+- 3. 硬链接只有在同一个文件系统中才能创建。
+- 4. 删除其中一个硬链接文件并不影响其他有相同 inode 号的文件。

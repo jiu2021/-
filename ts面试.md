@@ -22,6 +22,22 @@
 
 `typescript`的核心功能之一就是对类型做检测，虽然这种检测方式是“鸭式辨型法”，而接口的作用就是为为这些类型命名和为你的代码或第三方代码定义一个约定
 
+#### 比较type
+
+type 叫类型别名，藏在高级类型
+
+type (类型别名)，顾名思义，类型别名只是给类型起一个新名字。**它并不是一个类型，只是一个别名而已**
+
+- 都可以继承
+
+- type行，interface不行
+  
+  声明基本类型、联合类型、交叉类型、元组
+
+- type不行，interface行
+  
+  合并重复声明
+
 ### class
 
 可以看到，上述的形式跟`ES6`十分的相似，`typescript`在此基础上添加了三种修饰符：
@@ -43,3 +59,37 @@
 - 从定义的方式而言，typescript 声明函数需要定义参数类型或者声明返回值类型
 - typescript 在参数中，添加可选参数供使用者选择
 - typescript 增添函数重载功能，使用者只需要通过查看函数声明的方式，即可知道函数传递的参数个数以及类型
+
+### 常用语法
+
+- Omit
+  
+  去除单个类型
+  
+  ```ts
+  export type OmitEmailContact = Omit<Contact, 'email' >;
+  ```
+
+- Pick
+  
+  选定类型
+  
+  ```ts
+  export interface ContactPick extends Pick<Contact, 'name' | 'phone'> {}
+  ```
+
+- Partial
+  
+  所有可选
+  
+  ```ts
+  export interface PartialContact= Partial<Contact>
+  ```
+
+- Required
+  
+  所有必选
+  
+  ```ts
+  export interface RequiredContact= Required<Contact>
+  ```

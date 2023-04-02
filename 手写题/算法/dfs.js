@@ -49,3 +49,8 @@ function dfs(tree_obj) {
 dfs(tree)
 
 console.log(res)
+// [
+//   2345, 3456, 23456,
+//   6777,   66,  4545,
+//     44,    5
+// ]

@@ -21,6 +21,12 @@
 - [`flex-direction`](https://developer.mozilla.org/zh-CN/docs/Web/CSS/flex-direction): `row`
 - [`flex-wrap`](https://developer.mozilla.org/zh-CN/docs/Web/CSS/flex-wrap): `nowrap`
 
+flext:1 展开后是这样的：flex:1 1 0%。注意，并不是 flex:1 1 auto
+
+auto 是 flex-basic 的默认值，长度等于灵活项目(弹性子元素)的长度。如果该项目未指定长度(未设置width或height属性)，则长度将根据内容决定
+
+flex-basic:0; 即使元素设置了 width 或 height 也会被忽略掉，以元素自身内容大小为弹性子元素的伸缩基准值
+
 ### 层叠
 
 z-index是在父元素的基础上进行层叠
@@ -44,3 +50,28 @@ css变量减少样式重复定义，比如同一个颜色值要在多个地方�
 +号 相邻兄弟选择器
 
 ～号 后续兄弟选择器
+
+## 伪类/伪元素
+
+什么是伪类？什么是伪元素？你所知道的伪元素？
+伪类用于选择DOM树之外的信息，包含那些 匹配指定状态的元素 ，比如:visited，:active；或是 不能用简单选择器进行表示的信息 ；表示元素的一种状态。
+伪元素包含那些满足一定逻辑条件的DOM树中的元素，比如: ::before, ::after
+
+## 未知宽高居中
+
+- inline-block + vertical-align：middle
+
+- absolute + translate
+
+- flex
+
+## 样式穿透
+
+- `css`可以使用`>>>`，`/deep/`，`::v-deep`
+- `less`和`node-sass`可以使用`/deep/`，`::v-deep`
+- `dart-sass`可以使用`::v-deep`
+- `vue2.7`以上版本以及包括`vue3`，应该使用`:deep()`
+
+## CSS in JS
+
+CSS Modules 并不是 CSS 官方的标准，也不是浏览器的特性，而是使用一些构建工具，比如 webpack，对 CSS 类名和选择器限定作用域的一种方式（类似命名空间）。通过 CSS Modules，我们可以实现 CSS 的局部作用域，Class 的组合等功能。最后我们知道 CSS Loader 实际上是通过两个库进行实现的。其中， `postcss-modules-scope` —— 实现CSS Modules 的样式隔离（Scope Local）以及继承（Extend）和 `postcss-modules-values` ——在模块文件之间传递任意值
