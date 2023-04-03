@@ -75,3 +75,12 @@ css变量减少样式重复定义，比如同一个颜色值要在多个地方�
 ## CSS in JS
 
 CSS Modules 并不是 CSS 官方的标准，也不是浏览器的特性，而是使用一些构建工具，比如 webpack，对 CSS 类名和选择器限定作用域的一种方式（类似命名空间）。通过 CSS Modules，我们可以实现 CSS 的局部作用域，Class 的组合等功能。最后我们知道 CSS Loader 实际上是通过两个库进行实现的。其中， `postcss-modules-scope` —— 实现CSS Modules 的样式隔离（Scope Local）以及继承（Extend）和 `postcss-modules-values` ——在模块文件之间传递任意值
+
+## 响应式布局
+
+实现响应式布局的方式有如下：
+
+- 媒体查询
+- 百分比
+- vw/vh
+- rem
