@@ -73,3 +73,22 @@ Function.prototype.newApply = function (ctx, args) {
 }
 
 test.newApply(obj, [1, 2]);
+
+
+Function.prototype.new_apply = function (ctx, arg) {
+  arg = arg || [];
+  ctx = ctx || window;
+
+  let key = Symbol();
+
+  ctx[key] = this;
+
+  const res = ctx[key](...arg)
+
+  delete ctx[key]
+
+  return res
+
+}
+
+test.new_apply(obj, [4, 5, 6])

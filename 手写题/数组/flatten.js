@@ -12,3 +12,29 @@ var flatten = function (arr) {
 }
 
 console.log(flatten([1, [1, 2, [2, 4]], 3, 5]));  // [1, 1, 2, 2, 4, 3, 5]
+
+
+
+
+
+
+
+
+
+
+
+
+function my_flat(arr) {
+  let res = [];
+  for (let item of arr) {
+    if (Array.isArray(item)) {
+      res = res.concat(my_flat(item))
+    } else {
+      res.push(item)
+    }
+  }
+
+  return res;
+}
+
+console.log(my_flat([1, [1, 2, [2, 4]], 3, 5]));

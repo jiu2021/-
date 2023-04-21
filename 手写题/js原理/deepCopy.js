@@ -28,4 +28,25 @@ let arr = [
   deepClone(obj)
 ]
 
-console.log(deepClone([])) // {name: 'jack', birth: {…}}
+
+
+
+
+
+
+
+
+
+function my_deepClone(obj) {
+  let copy = obj instanceof Array ? [] : {};
+  for (let key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      copy[key] = typeof obj[key] === 'object' ? deepClone(obj[key]) : obj[key];
+    }
+  }
+
+  return copy;
+}
+console.log(typeof my_deepClone)
+
+console.log(my_deepClone(arr)) // {name: 'jack', birth: {…}}

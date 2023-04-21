@@ -45,6 +45,27 @@
 
 柯里化、代替全局变量
 
+```js
+        var fn  =function(){
+            var sum = 0
+            return functn(){
+                sum++
+                console.log(sum);
+            }
+        }
+        fn1=fn() 
+        fn1()   //1
+        fn1()   //2
+        fn1()   //3
+        fn1 = null // fn1的引用fn被手动释放了
+        fn1=fn()  //num再次归零
+        fn1() //1
+```
+
+**不再用到的内存，没有及时释放，就叫做内存泄漏（memory leak）。**
+
+**内存溢出一般是指执行程序时，程序会向系统申请一定大小的内存，当系统现在的实际内存少于需要的内存时，就会造成内存溢出。**
+
 ### == 和 ===
 
 ===：
@@ -276,3 +297,7 @@ for(let node of walkPreOrder(root)){
   console.log(node)
 }
 ```
+
+- 普通函数使用 function 声明，生成器函数用 function*声明
+- 普通函数使用 return 返回值，生成器函数使用 yield 返回值
+- 普通函数是 run to completion 模式，即普通函数开始执行后，会一直执行到该函数所有语句完成，在此期间别的代码语句是不会被执行的；生成器函数是 run-pause-run 模式，即生成器函数可以在函数运行中被暂停一次或多次，并且在后面再恢复执行，在暂停期间允许其他代码语句被执行

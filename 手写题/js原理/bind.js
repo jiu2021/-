@@ -15,3 +15,9 @@ const test = {
 test.showName("handsome"); // fy is handsome
 test.showName.bind({ name: "kj" }, "handsome")('vugyv', 'vjygv');
 test.showName.bindNew({ name: "kj" })('kj', 'fasdfa');
+
+
+
+Function.prototype.my_bind = function (ctx, ...arg) {
+  return (...newarg) => this.apply(ctx, [...arg, ...newarg]);
+}
