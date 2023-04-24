@@ -48,14 +48,18 @@
 
 块级格式上下文
 
+1. BFC元素垂直方向的边距会发生重叠。属于不同BFC外边距不会发生重叠
+2. BFC的区域不会与浮动元素的布局重叠。
+3. BFC元素是一个独立的容器，外面的元素不会影响里面的元素。里面的元素也不会影响外面的元素。
+4. 计算BFC高度的时候，浮动元素也会参与计算(清除浮动)
+
 BFC元素特性表现原则就是，内部子元素再怎么翻江倒海，翻云覆雨都不会影响外部的元素
 
-- overflow: hidden
-- display: inline-block
-- position: absolute
-- position: fixed
-- display: table-cell
-- display: flex
+- overflow: hidden（不为visible）
+- display: inline-block、flex、table-cell
+- position: fixed、absolute（不是static或reletive）
+
+content-box是标准盒模型，boder-box是IE盒模型
 
 ### 元素隐藏
 
@@ -95,4 +99,4 @@ opacity: 0元素上面绑定的事件是可以触发的。
    
    有 `defer`，加载后续文档元素的过程将和 `script.js` 的加载并行进行（异步），但是 `script.js` 的执行要在所有元素解析完成之后，`DOMContentLoaded` 事件触发之前完成。
 
-![image.png](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/894d84e8a7e0497091a26e43e1a84237~tplv-k3u1fbpfcp-zoom-in-crop-mark:1512:0:0:0.awebp?)
+<img title="" src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/894d84e8a7e0497091a26e43e1a84237~tplv-k3u1fbpfcp-zoom-in-crop-mark:1512:0:0:0.awebp?" alt="image.png" data-align="center">

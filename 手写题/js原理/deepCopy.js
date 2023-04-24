@@ -32,11 +32,6 @@ let arr = [
 
 
 
-
-
-
-
-
 function my_deepClone(obj) {
   let copy = obj instanceof Array ? [] : {};
   for (let key in obj) {
@@ -47,6 +42,5 @@ function my_deepClone(obj) {
 
   return copy;
 }
-console.log(typeof my_deepClone)
 
 console.log(my_deepClone(arr)) // {name: 'jack', birth: {…}}

@@ -20,6 +20,9 @@
 
 - 把node的事件循环也说一下，重复1、2、3点，node中的第3点要说的是node11前后的事件循环变动点。
 
+宏任务（macrotask）：setTimeout、setInterval、setImmediate、I/O、UI rendering  
+微任务（microtask）：promise.then、process.nextTick、MutationObserver、queneMicrotask(开启一个微任务)
+
 ### typeof和instanceof
 
 - typeof的返回值是一个字符串，用来说明变量的数据类型；

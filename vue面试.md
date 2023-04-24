@@ -85,6 +85,12 @@ diff算法的本质是找出两个对象之间的差异，目的是尽可能复�
 
 ![](/Users/jiu/Library/Application%20Support/marktext/images/2023-03-27-15-22-37-image.png)
 
+### computed和methods
+
+1. computed 是基于响应性依赖来进行缓存的。只有在响应式依赖发生改变时它们才会重新求值, 也就是说, 当msg属性值没有发生改变时, 多次访问 reversedMsg 计算属性会立即返回之前缓存的计算结果, 而不会再次执行computed中的函数。但是methods方法中是每次调用, 都会执行函数的, methods它不是响应式的。  
+2. computed中的成员可以只定义一个函数作为只读属性, 也可以定义成 get/set变成可读写属性, 但是methods中的成员没有这样的。
+3. watch的使用场景是：当在data中的某个数据发生变化时, 我们需要做一些操作, 或者当需要在数据变化时执行异步或开销较大的操作时. 我们就可以使用watch来进行监听。
+
 ### 比较react
 
 **Vue 使用的是 web 开发者更熟悉的模板与特性**，Vue的API跟传统web开发者熟悉的模板契合度更高，比如Vue的[单文件组件](https://www.zhihu.com/search?q=%E5%8D%95%E6%96%87%E4%BB%B6%E7%BB%84%E4%BB%B6&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22%3A%22answer%22%2C%22sourceId%22%3A1066629375%7D)是以模板+JavaScript+CSS的组合模式呈现，它跟web现有的HTML、JavaScript、CSS能够更好地配合。**React 的特色在于[函数式编程](https://www.zhihu.com/search?q=%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22%3A%22answer%22%2C%22sourceId%22%3A1066629375%7D)的理念和丰富的技术选型**。Vue 比起 React 更容易被前端工程师接受，这是一个直观的感受；React 则更容易吸引在 FP 上持续走下去的开发者。
@@ -107,18 +113,127 @@ diff算法的本质是找出两个对象之间的差异，目的是尽可能复�
 
 - 渲染过程不同
 
-### 软连接硬连接
+### 数组监听
 
-软链接：
+vue 出于性能的考虑，没有用 Object.defineProperty 去监听数组，而是通过覆盖数组的原型的方法，对常用的七种方法（[ 'push', 'pop', 'shift', 'unshift', 'splice', 'sort', 'reverse' ]）进行了变异，以此来实现对数组的监听。
 
-- 1.软链接是存放另一个文件的路径的形式存在。
-- 2.软链接可以 跨文件系统 ，硬链接不可以。
-- 3.软链接可以对一个不存在的文件名进行链接，硬链接必须要有源文件。
-- 4.软链接可以对目录进行链接。
+## vue深入
 
-硬链接：
+### 设计前瞻
 
-- 1. 硬链接，以文件副本的形式存在。但不占用实际空间。
-- 2. 不允许给目录创建硬链接。
-- 3. 硬链接只有在同一个文件系统中才能创建。
-- 4. 删除其中一个硬链接文件并不影响其他有相同 inode 号的文件。
+### 目录结构
+
+- compiler-core    编译器核心库
+
+- compiler-core 浏览器的编译时
+
+- compiler-ssr 服务端渲染
+
+- compiler-sfc 单文件组件
+
+- reactivity 响应式
+
+- runtime-core     运行时核心库
+
+- runtime-dom     浏览器的运行时
+
+- server-render 服务端渲染
+
+- sfc-playground 单文件组件工具
+
+### 运行时
+
+render接受vnode和container渲染成真实节点
+
+纯运行时必须提供复杂的js对象
+
+### 编译时
+
+![](/Users/jiu/Library/Application%20Support/marktext/images/2023-03-20-16-29-58-image.png)
+
+js ast多了codegennode帮助生成render函数
+
+compile将vue模板编译成render函数
+
+- 初次渲染--挂载
+
+- 更新渲染--打补丁
+
+纯编译时损失灵活性
+
+vue选择两者结合，运行时进行差异比对
+
+### 响应式
+
+Relfect保证安全的使用Proxy
+
+reactive：
+
+- 通过proxy的handler实现数据监听
+
+- 需要使用effect副作用函数
+
+- 基于weakmap的依赖收集
+  
+  ![](/Users/jiu/Library/Application%20Support/marktext/images/2023-04-24-15-45-54-image.png)
+  
+  指定对象、指定属性的依赖收集
+
+- 存在一对多的依赖关系
+
+ref:
+
+- 未使用监听
+
+- 生成了RefImpl的的实例对象
+
+- 通过get set value定义了两个属性函数，通过主动触发来实现依赖收集和触发
+
+- 必须使用.value保证响应性
+
+### 虚拟dom
+
+1. 兼容性好。因为Vnode本质是JS对象，所以不管Node还是浏览器环境，都可以操作；
+2. 减少了对Dom的操作。页面中的数据和状态变化，都通过Vnode对比，只需要在比对完之后更新DOM，不需要频繁操作，提高了页面性能；
+
+### diff算法
+
+![](/Users/jiu/Library/Application%20Support/marktext/images/2023-03-20-15-23-05-image.png)
+
+旧节点和新节点的子节点均为数组时使用
+
+- 自前向后
+  
+  找相同的node，不同跳出
+
+- 自后向前
+  
+  找相同的node，不同跳出
+
+- 新多于旧
+  
+  新建节点
+
+- 旧多于新
+  
+  删除节点
+
+- 乱序
+  
+  **第一步： 通过老节点的key找到对应新节点的index:开始遍历老的节点，判断有没有key， 如果存在key通过新节点的keyToNewIndexMap找到与新节点index,如果不存在key那么会遍历剩下来的新节点试图找到对应index。**
+  
+  **第二步：如果存在index证明有对应的老节点，那么直接复用老节点进行patch，没有找到与老节点对应的新节点，删除当前老节点。**
+  
+  **第三步：newIndexToOldIndexMap找到对应新老节点关系。**
+  
+  **为什么要得到最长稳定序列**
+  
+  因为我们需要一个序列作为基础的参照序列，其他未在稳定序列的节点，进行移动。
+
+### 组件
+
+- 本质上是个对象
+
+- 组件渲染通过render函数处理
+
+- 生命周期即方法回调

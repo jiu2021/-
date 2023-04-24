@@ -23,7 +23,7 @@
 
 flext:1 展开后是这样的：flex:1 1 0%。注意，并不是 flex:1 1 auto
 
-auto 是 flex-basic 的默认值，长度等于灵活项目(弹性子元素)的长度。如果该项目未指定长度(未设置width或height属性)，则长度将根据内容决定
+auto 是 flex-basis 的默认值，长度等于灵活项目(弹性子元素)的长度。如果该项目未指定长度(未设置width或height属性)，则长度将根据内容决定
 
 flex-basic:0; 即使元素设置了 width 或 height 也会被忽略掉，以元素自身内容大小为弹性子元素的伸缩基准值
 
@@ -84,3 +84,33 @@ CSS Modules 并不是 CSS 官方的标准，也不是浏览器的特性，而是
 - 百分比
 - vw/vh
 - rem
+
+## 1px边框
+
+```css
+.scale-1px{
+  position: relative;
+  border:none;
+}
+.scale-1px:after{
+  content: '';
+  position: absolute;
+  bottom: 0;
+  background: #000;
+  width: 100%;
+  height: 1px;
+  /*核心是利用transform缩放边框*/
+  -webkit-transform: scaleY(0.5);
+  transform: scaleY(0.5);
+  -webkit-transform-origin: 0 0;
+  transform-origin: 0 0;
+}
+```
+
+```js
+if(window.devicePixelRatio && devicePixelRatio >= 2){
+  document.querySelector('ul').className = 'scale-1px';
+}
+```
+
+我们在设计1px的边框时，我们是想要1px的物理像素。如果我们仅仅根据设备像素比来计算出需要书写的CSS像素时，又会因为不同浏览器的策略而出现许多兼容性问题，针对此问题，我们可以通过伪元素+transform的手段来解决。
