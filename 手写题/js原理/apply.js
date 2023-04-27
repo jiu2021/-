@@ -92,3 +92,16 @@ Function.prototype.new_apply = function (ctx, arg) {
 }
 
 test.new_apply(obj, [4, 5, 6])
+
+
+Function.prototype.apply = function (ctx, arg_arr) {
+  let key = Symbol();
+
+  ctx[key] = this;
+
+  const res = ctx[key](...arg_arr);
+
+  delete ctx[key]
+
+  return res;
+}

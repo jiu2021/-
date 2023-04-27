@@ -59,3 +59,22 @@ function throttle_1(fn, wait = 1000, imd = false) {
 
   return _throttle;
 }
+
+
+function ttt(targetfn, interval, imd) {
+  let pre_time = 0;
+  let imdC = true;
+
+  return function () {
+    if (imd && imdC) {
+      targetfn.apply(this, arguments);
+      imdC = false;
+    }
+
+    let now_time = new Date().getTime();
+    if (now_time - pre_time > interval) {
+      targetfn.apply(this, arguments);
+      now_time = pre_time;
+    }
+  }
+}

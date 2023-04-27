@@ -48,3 +48,17 @@ const use_curry = new_curry(sum);
 
 let res = use_curry(1, 2)(3);
 console.log(res)
+
+
+function myCurry(targetfn) {
+  let len = targetfn.length;
+  function fn() {
+    if (arguments.length < len) {
+      return fn.bind(null, ...arguments);
+    } else {
+      return targetfn.apply(null, ...arguments);
+    }
+  }
+
+  return fn
+}

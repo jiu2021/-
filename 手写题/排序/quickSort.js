@@ -12,7 +12,6 @@ function quicksort(arr) {
     }
   }
   return quicksort(left).concat(pivot, quicksort(right));
-
 }
 const arr = [4, 3, 5, 2, 1, 6]
 

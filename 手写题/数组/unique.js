@@ -12,4 +12,18 @@ function unique(array) {
 }
 
 // 都能去重
-Array.from(new Set(arr))
+// Array.from(new Set(arr))
+
+
+let a = {
+  name: 'aaaa',
+  say() {
+    console.log(this.name);
+  }
+}
+
+a.say();
+
+let b = a.say()
+
+
