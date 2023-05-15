@@ -117,6 +117,10 @@ diff算法的本质是找出两个对象之间的差异，目的是尽可能复�
 
 vue 出于性能的考虑，没有用 Object.defineProperty 去监听数组，而是通过覆盖数组的原型的方法，对常用的七种方法（[ 'push', 'pop', 'shift', 'unshift', 'splice', 'sort', 'reverse' ]）进行了变异，以此来实现对数组的监听。
 
+### vuex
+
+区分 actions 和 mutations 并不是为了解决竞态问题，而是为了能用 devtools 追踪状态变化，如果你开着 devtool 调用一个异步的 actions，你可以清楚地看到它所调用的 mutations 是何时被记录下来的，并且可以立刻查看它们对应的状态
+
 ## vue深入
 
 ### 设计前瞻

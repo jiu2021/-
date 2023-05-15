@@ -62,3 +62,21 @@ function myCurry(targetfn) {
 
   return fn
 }
+
+
+function curry(...args){
+  let judge=(...arg)=>{
+    if(arg.length===0){
+      return args.reduce((pre,item)=>
+        pre+item
+      )
+    }else{
+        args.push(...arg)
+    }
+    return (...argss)=>judge(...argss)
+  }
+  return judge
+}
+const fn = curry(1,2,3)
+const fn2 = fn(4)
+console.log(fn2() );

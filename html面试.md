@@ -1,5 +1,27 @@
 # html面试
 
+### 头部
+
+```html
+<DOCTYPE html>
+```
+
+声明文档类型
+
+| 标签                                                      | 描述                |
+| ------------------------------------------------------- | ----------------- |
+| [<head>](https://www.runoob.com/tags/tag-head.html)     | 定义了文档的信息          |
+| [<title>](https://www.runoob.com/tags/tag-title.html)   | 定义了文档的标题          |
+| [<base>](https://www.runoob.com/tags/tag-base.html)     | 定义了页面链接标签的默认链接地址  |
+| [<link>](https://www.runoob.com/tags/tag-link.html)     | 定义了一个文档和外部资源之间的关系 |
+| [<meta>](https://www.runoob.com/tags/tag-meta.html)     | 定义了HTML文档中的元数据    |
+| [<script>](https://www.runoob.com/tags/tag-script.html) | 定义了客户端的脚本文件       |
+| [<style>](https://www.runoob.com/tags/tag-style.html)   | 定义了HTML文档的样式文件    |
+
+<!DOCTYPE html>
+
+<!DOCTYPE html>
+
 ### H5新特性
 
 - 语义化标签
@@ -24,7 +46,7 @@
   
   offsetTop、offsetLeft 与最近具有定位的祖先元素的距离（client中border宽度）
   
-  offsetWidth、offsetHeight 包括padding和border（client不包括border）
+  offsetWidth、offsetHeight 包括padding和border（client不包括border和padding）
   
   offsetX、offsetY 相对于容器（client 相对于文档）
   
@@ -58,6 +80,7 @@ BFC元素特性表现原则就是，内部子元素再怎么翻江倒海，翻�
 - overflow: hidden（不为visible）
 - display: inline-block、flex、table-cell
 - position: fixed、absolute（不是static或reletive）
+- `float` 的值不为 `none`
 
 content-box是标准盒模型，boder-box是IE盒模型
 
