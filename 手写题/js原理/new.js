@@ -22,9 +22,7 @@ function my_new(constructor, ...args) {
 
   obj.__proto__ = constructor.prototype;
 
-  const res = constructor.apply(obj, args);
-
-  console.log(res);
+  constructor.apply(obj, args);
 
   return obj
 }

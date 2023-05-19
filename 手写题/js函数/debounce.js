@@ -53,7 +53,7 @@ function debounce_1(fn, delay = 1000, imd = false) {
       imd_c = false;
     }
 
-    setTimeout(() => {
+    timer = setTimeout(() => {
       fn.apply(this, args);
 
       imd_c = false;
