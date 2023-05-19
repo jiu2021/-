@@ -152,3 +152,18 @@ if(window.devicePixelRatio && devicePixelRatio >= 2){
  **`devicePixelRatio`** 返回当前显示设备的*物理像素*分辨率与*CSS 像素*分辨率之比。
 
 我们在设计1px的边框时，我们是想要1px的物理像素。如果我们仅仅根据设备像素比来计算出需要书写的CSS像素时，又会因为不同浏览器的策略而出现许多兼容性问题，针对此问题，我们可以通过伪元素+transform的手段来解决。
+
+## 硬件加速
+
+如下几个css属性可以触发硬件加速：
+
+- transform（ translate3d、translateZ(0)等）
+- opacity
+- filter（滤镜：drop-shadow()、opacity()，函数与已有的`box-shadow、opacity`属性很相似；不同之处在于，通过滤镜，一些浏览器为了更好的性能会提供硬件加速）
+- will-change：哪一个属性即将发生变化，进而进行优化。
+
+因此为了页面更加流畅，高性能的动画，我们可以使用`GPU`来处理。
+
+如果有一些元素不需要用到上述属性，但是需要触发硬件加速效果，例如：某些情况下，我们并不想要对元素应用３Ｄ变换的效果，却还想要实现ＧＰＵ加速，可以使用一些小技巧来诱导浏览器开启硬件加速。
+
+transform: translateZ(0)
